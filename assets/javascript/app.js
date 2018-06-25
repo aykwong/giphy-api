@@ -1,12 +1,12 @@
 var button = {
-  topics: ["Apple", "Banana", "Mango", "Durian"],
-  omdb: ["Frozen", "Inception", "Ironman", "Matrix"]
+  giphy: ["Apple", "Banana", "Mango", "Durian"],
+  omdb: ["Frozen", "Inception", "Iron Man", "The Matrix"]
 };
 
 function create() {
   if ($(".nav-link:first").hasClass("active")) {
     console.log("inside 1");
-    var array = button.topics;
+    var array = button.giphy;
   } else {
     console.log("inside 2");
     var array = button.omdb;
@@ -14,10 +14,14 @@ function create() {
   let topicHolder = $.trim($("#topicsInput").val());
   $(".card-body").empty();
   if (topicHolder !== "") {
-    button.topics.push(topicHolder);
+    array.push(topicHolder);
   }
   for (let count = 0; count < array.length; count++) {
-    let topicButton = $('<button class="choice">');
+    if ($(".nav-link:first").hasClass("active")) {
+      var topicButton = $('<button class="choice giphy">');
+    } else {
+      var topicButton = $('<button class="choice omdb">');
+    }
     $(topicButton).addClass("btn btn-outline-dark");
     $(topicButton).attr("data-name", array[count]);
     $(topicButton).text(array[count]);
@@ -61,16 +65,15 @@ function omdb() {
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
+    let movie = $("<div>");
     let source = $(`<p class="title">`).text(response.Title);
-    console.log(response.title);
-    console.log(source);
     let released = $(`<p class="released">`).text(response.Released);
     let rating = $(`<p class="rating">`).text(response.Rating);
     let plot = $(`<p class="plot">`).text(response.Plot);
     let poster = $(`<img src="${response.Poster}" alt="${response.Title}" />`);
 
-    $("#output").prepend(source, released, rating, plot, poster);
+    $(movie).append(source, released, rating, plot, poster);
+    $("#output").prepend(movie);
   });
 }
 
@@ -94,7 +97,9 @@ $(document).ready(create);
 
 $("#add-topic").on("click", create);
 
-$(document).on("click", ".choice", giphy);
+$(document).on("click", ".giphy", giphy);
+
+$(document).on("click", ".omdb", omdb);
 
 $("#output").on("click", "img", animate);
 

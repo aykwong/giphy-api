@@ -1,22 +1,30 @@
 var button = {
-  topics: ["apple", "banana", "mango", "durian"],
-  create: function(event) {
-    event.preventDefault();
-    let fruit = $.trim($("#topicsInput").val());
-    $("#topics-view").empty();
-    if (fruit !== "") {
-      button.topics.push(fruit);
-    }
-    for (let count = 0; count < button.topics.length; count++) {
-      let topicButton = $('<button class="choice">');
-      $(topicButton).addClass("topics");
-      $(topicButton).attr("data-name", button.topics[count]);
-      $(topicButton).text(button.topics[count]);
-      $("#topics-view").append(topicButton);
-    }
-    $("#topicsInput").val("");
-  }
+  topics: ["Apple", "Banana", "Mango", "Durian"],
+  omdb: ["Frozen", "Inception", "Ironman", "Matrix"]
 };
+
+function create() {
+  if ($(".nav-link:first").hasClass("active")) {
+    console.log("inside 1");
+    var array = button.topics;
+  } else {
+    console.log("inside 2");
+    var array = button.omdb;
+  }
+  let topicHolder = $.trim($("#topicsInput").val());
+  $(".card-body").empty();
+  if (topicHolder !== "") {
+    button.topics.push(topicHolder);
+  }
+  for (let count = 0; count < array.length; count++) {
+    let topicButton = $('<button class="choice">');
+    $(topicButton).addClass("btn btn-outline-dark");
+    $(topicButton).attr("data-name", array[count]);
+    $(topicButton).text(array[count]);
+    $(".card-body").append(topicButton);
+  }
+  $("#topicsInput").val("");
+}
 
 function giphy() {
   let search = $(this).attr("data-name");
@@ -45,6 +53,27 @@ function giphy() {
   });
 }
 
+function omdb() {
+  let search = $(this).attr("data-name");
+  let queryURL = `http://www.omdbapi.com/?t=${search}&apikey=ad83c563`;
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+    let source = $(`<p class="title">`).text(response.Title);
+    console.log(response.title);
+    console.log(source);
+    let released = $(`<p class="released">`).text(response.Released);
+    let rating = $(`<p class="rating">`).text(response.Rating);
+    let plot = $(`<p class="plot">`).text(response.Plot);
+    let poster = $(`<img src="${response.Poster}" alt="${response.Title}" />`);
+
+    $("#output").prepend(source, released, rating, plot, poster);
+  });
+}
+
 function animate() {
   let state = $(this).attr("state");
   $(this).attr("state", "animate");
@@ -55,8 +84,18 @@ function animate() {
   }
 }
 
-$("#add-topic").on("click", button.create);
+function active() {
+  $(".nav-link").removeClass("active");
+  $(this).addClass("active");
+  create();
+}
 
-$(document).on("click", ".topics", giphy);
+$(document).ready(create);
+
+$("#add-topic").on("click", create);
+
+$(document).on("click", ".choice", giphy});
 
 $("#output").on("click", "img", animate);
+
+$(".card").on("click", ".nav-link", active);

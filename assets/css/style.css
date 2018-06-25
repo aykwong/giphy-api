@@ -1,4 +1,30 @@
+.navbar {
+    background-color: #000000;
+    padding: 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.choice {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#logo {
+    width: 20%;
+}
+
 #output div {
     float: left;
     margin-right: 20px;
+}
+
+.card-header {
+    background-color: #000000;
+}
+
+.nav-link {
+    color: #eeeeee;
 }

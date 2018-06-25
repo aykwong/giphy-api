@@ -61,7 +61,7 @@ function giphy() {
 //Utilizes the OMDB website and outputs the content into the HTML page
 function omdb() {
   let search = $(this).attr("data-name");
-  let queryURL = `http://www.omdbapi.com/?t=${search}&apikey=ad83c563`;
+  let queryURL = `https://www.omdbapi.com/?t=${search}&apikey=ad83c563`;
 
   $.ajax({
     url: queryURL,

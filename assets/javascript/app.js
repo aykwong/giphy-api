@@ -94,7 +94,7 @@ $(document).ready(create);
 
 $("#add-topic").on("click", create);
 
-$(document).on("click", ".choice", giphy});
+$(document).on("click", ".choice", giphy);
 
 $("#output").on("click", "img", animate);
 

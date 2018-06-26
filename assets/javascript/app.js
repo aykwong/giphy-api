@@ -72,13 +72,13 @@ function omdb() {
   }).then(function(response) {
     $("#output").css("display", "block");
     let movie = $(`<div class="col unit mb-4">`);
-    let title = $(`<h3 class="title">`).text(response.Title);
-    let released = $(`<p class="released">`).text(
-      `Released: ${response.Released}`
+    let title = $(`<h2 class="title">`).text(response.Title);
+    let released = $(`<p class="released">`).html(
+      `<span class="font-weight-bold">Released: </span>${response.Released}`
     );
-    let rating = $(`<p class="rating">`).text(`Rated: ${response.Rated}`);
-    let actors = $(`<p class="actors">`).text(`Actors/Actresses: ${response.Actors}`)
-    let plot = $(`<p class="plot">`).text(`Plot: ${response.Plot}`);
+    let rating = $(`<p class="rating">`).html(`<span class="font-weight-bold">Rated: </span>${response.Rated}`);
+    let actors = $(`<p class="actors">`).html(`<span class="font-weight-bold">Actors/Actresses: </span>${response.Actors}`)
+    let plot = $(`<p class="plot">`).html(`<span class="font-weight-bold">Plot: </span>${response.Plot}`);
     let poster = $(
       `<img src="${response.Poster}" class="mb-4" alt="${response.Title}" />`
     );
@@ -110,10 +110,6 @@ function active() {
 function preventRefresh(event) {
   event.preventDefault();
   create();
-}
-
-function output() {
-  $("#output").css("display", "block");
 }
 
 //Creates pre-set buttons on page load

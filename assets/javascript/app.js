@@ -1,6 +1,6 @@
 var button = {
-  giphy: ["Apple", "Banana", "Mango", "Durian"],
-  omdb: ["Frozen", "Inception", "Iron Man", "The Matrix"]
+  giphy: ["Apple", "Banana", "Durian", "Bruce Lee", "Darth Vader"],
+  omdb: ["Frozen", "Inception", "The Matrix", "Big Hero 6", "Good Will Hunting"]
 };
 
 //Creates the buttons depending on the active tab, empties and recreates as necessary
@@ -38,23 +38,26 @@ function giphy() {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function (response) {
+  }).then(function(response) {
+    $("#output").css("display", "block");
+    let section = $(`<div class="col unit mb-4">`);
     for (let number = 0; number < response.data.length; number++) {
       let source = response.data[number];
       let gif = $('<div class="group">');
       let rating = $("<p>").text(`Rating: ${source.rating.toUpperCase()}`);
       let image = $(
         `<img src="${source.images.fixed_height_still.url}" alt="${
-        source.title
+          source.title
         }" />`
       );
-      $(image).attr("state", "still");
-      $(image).attr("data-still", source.images.fixed_height_still.url);
-      $(image).attr("data-animate", source.images.fixed_height.url);
+      image.attr("state", "still");
+      image.attr("data-still", source.images.fixed_height_still.url);
+      image.attr("data-animate", source.images.fixed_height.url);
       $(gif).append(rating);
       $(gif).prepend(image);
-      $("#output").prepend(gif);
+      $(section).prepend(gif);
     }
+    $("#output").prepend(section);
   });
 }
 
@@ -66,15 +69,21 @@ function omdb() {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function (response) {
-    let movie = $("<div>");
-    let source = $(`<h3 class="title">`).text(response.Title);
-    let released = $(`<p class="released">`).text(response.Released);
-    let rating = $(`<p class="rating">`).text(response.Rating);
-    let plot = $(`<p class="plot">`).text(response.Plot);
-    let poster = $(`<img src="${response.Poster}" alt="${response.Title}" />`);
+  }).then(function(response) {
+    $("#output").css("display", "block");
+    let movie = $(`<div class="col unit mb-4">`);
+    let title = $(`<h3 class="title">`).text(response.Title);
+    let released = $(`<p class="released">`).text(
+      `Released: ${response.Released}`
+    );
+    let rating = $(`<p class="rating">`).text(`Rated: ${response.Rated}`);
+    let actors = $(`<p class="actors">`).text(`Actors/Actresses: ${response.Actors}`)
+    let plot = $(`<p class="plot">`).text(`Plot: ${response.Plot}`);
+    let poster = $(
+      `<img src="${response.Poster}" class="mb-4" alt="${response.Title}" />`
+    );
 
-    $(movie).append(source, released, rating, plot, poster);
+    $(movie).append(title, released, rating, actors, plot, poster);
     $("#output").prepend(movie);
   });
 }
@@ -101,6 +110,10 @@ function active() {
 function preventRefresh(event) {
   event.preventDefault();
   create();
+}
+
+function output() {
+  $("#output").css("display", "block");
 }
 
 //Creates pre-set buttons on page load

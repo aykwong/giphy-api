@@ -17,10 +17,9 @@
         <div class="container">
             <a class="navbar-brand text-white" href="index.html">
                 <img id="logo" src="assets/images/giphy-logo2.png" class="align-middle" />GIPHY-API</a>
-            <form id="form">
-                <label class="text-white" for="input">Add a Topic</label>
-                <input type="text" id="topicsInput">
 
+            <form id="form">
+                <input type="text" id="topicsInput" placeholder="Add a Topic">
                 <input id="add-topic" type="submit" value="Submit">
             </form>
         </div>
@@ -31,17 +30,17 @@
             <div class="card-header">
                 <div class="nav nav-tabs card-header-tabs">
                     <div class="nav-item">
-                        <a class="nav-link active" href="#">GIPHY</a>
+                        <div class="nav-link active">GIPHY</div>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="#">OMDB</a>
+                        <div class="nav-link">OMDB</div>
                     </div>
                 </div>
             </div>
             <div class="card-body"></div>
         </div>
 
-        <div id="output"></div>
+        <div class="clearfix pt-3" id="output"></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

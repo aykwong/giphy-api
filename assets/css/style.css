@@ -1,3 +1,8 @@
+body {
+    background-image: url("../images/escheresque_ste.png");
+    /* background-repeat: repeat; */
+}
+
 .navbar {
     background-color: #000000;
     padding: 0;
@@ -15,6 +20,11 @@
     width: 20%;
 }
 
+#output {
+    background-color: #eeeeee;
+    display: none;
+}
+
 #output div {
     float: left;
     margin-right: 20px;
@@ -26,4 +36,12 @@
 
 .nav-link {
     color: #eeeeee;
+}
+
+.unit {
+    border-bottom: 1px solid #000000;
+}
+
+.card {
+    border: none;
 }
